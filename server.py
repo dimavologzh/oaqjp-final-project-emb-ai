@@ -10,26 +10,31 @@ def sent_analyzer():
 
     # Pass the text to the emotion_detector function and store the response
     response = emotion_detector(text_to_analyze)
-    
-    # Extract all items except the last one
     items = list(response.items())
-    emotion_items = items[:-1]  # all except 'dominant_emotion'
-    dominant = items[-1][1]     # value of 'dominant_emotion'
+    
+    # Check if the first value is None, indicating an error or invalid input
+    if items[-1][1] is None:
+        output = "Invalid text! Please try again!"
+    else:    
+        # Extract all items except the last one
+        emotion_items = items[:-1]  # all except 'dominant_emotion'
+        dominant = items[-1][1]     # value of 'dominant_emotion'
 
-    # Build the sentence
-    output = "For the given statement, the system response is "
+        # Build the sentence
+        output = "For the given statement, the system response is "
 
-    # Add all emotion pairs with correct punctuation
-    for i, (emotion, score) in enumerate(emotion_items):
-        if i == len(emotion_items) - 1:
-            output += f"and '{emotion}': {score}. "
-        else:
-            output += f"'{emotion}': {score}, "
+        # Add all emotion pairs with correct punctuation
+        for i, (emotion, score) in enumerate(emotion_items):
+            if i == len(emotion_items) - 1:
+                output += f"and '{emotion}': {score}. "
+            else:
+                output += f"'{emotion}': {score}, "
 
-    # Add the dominant emotion part
-    output += f"The dominant emotion is {dominant}."
+        # Add the dominant emotion part
+        output += f"The dominant emotion is {dominant}."
 
-    # Return a formatted string with the sentiment label and score
+        # Return a formatted string with the emotions labels and scores
+    
     return output
 
 
